@@ -1,6 +1,8 @@
+require('iconv-lite').encodingExists('foo')
 
 const request = require("supertest");
 const app = require("../app");
+
 
 describe("GET /users", () => {
   it("USERS responds with response!", async () => {

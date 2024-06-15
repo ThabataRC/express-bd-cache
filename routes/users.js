@@ -1,6 +1,10 @@
+require('iconv-lite').encodingExists('foo')
+
 var express = require('express');
 const jwt = require('jsonwebtoken');
 var router = express.Router();
+
+
 // Melhor em variável de ambiente (.env)
 const SECRET = 'Backend-II';
 
