@@ -6,6 +6,7 @@ const sobrenomeMiddleware = require('../middlewares/sobrenomeMiddleware');
 const idadeMiddleware = require('../middlewares/idadeMiddleware');
 const NodeCache = require('node-cache');
 const cache = new NodeCache();
+const authenticateToken = require('../middlewares/authMiddleware');
 
 // Função de middleware para remover o cache
 function clearCache(req, res, next) {
@@ -15,10 +16,10 @@ function clearCache(req, res, next) {
 }
 
 /* GET clientes*/
-router.get('/', clearCache, clienteController.findAll);
+router.get('/', authenticateToken, clearCache, clienteController.findAll);
 
 /* POST clientes*/
-router.post('/', nomeMiddleware.validateName,
+router.post('/', authenticateToken, nomeMiddleware.validateName,
  sobrenomeMiddleware.validateFamilyName,
  idadeMiddleware.validateAge,
  clienteController.save,
@@ -26,9 +27,9 @@ router.post('/', nomeMiddleware.validateName,
 );
 
 /* PUT clientes*/
-router.put('/', clienteController.update, clearCache);
+router.put('/', authenticateToken, clienteController.update, clearCache);
 
 /* DELETE clientes*/
-router.delete('/:id', clienteController.remove, clearCache);
+router.delete('/:id', authenticateToken, clienteController.remove, clearCache);
 
 module.exports = router;
